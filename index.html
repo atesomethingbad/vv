@@ -11,32 +11,16 @@
             flex-direction: column;
             align-items: center;
             background-color: #f0f0f0;
-            margin: 0;
-            height: 100vh;
-            overflow: hidden;
-        }
-        #videoContainer {
-            position: relative;
-            width: 100%;
-            height: 100%;
+            padding: 20px;
         }
         video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            max-width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
         }
         .controls {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
             display: flex;
             align-items: center;
-            opacity: 0; /* Hidden by default */
-            transition: opacity 0.5s;
-        }
-        #videoContainer:hover .controls {
-            opacity: 1; /* Show controls on hover */
         }
         button {
             padding: 5px 10px;
@@ -53,17 +37,66 @@
 </head>
 <body>
     <h1>Custom Video Player</h1>
-    <div id="videoContainer">
-        <video id="videoPlayer" src="" type="video/mp4"></video>
-        <div class="controls">
-            <input type="file" id="videoInput" accept="video/*" />
-            <button id="playButton">Play</button>
-            <button id="pauseButton">Pause</button>
-            <button id="stopButton">Stop</button>
-            <button id="fullscreenButton">Fullscreen</button>
-        </div>
+    <video id="videoPlayer" controls>
+        Your browser does not support the video tag.
+    </video>
+    <div class="controls">
+        <input type="file" id="videoInput" accept="video/*" />
+        <button id="playButton">Play</button>
+        <button id="pauseButton">Pause</button>
+        <button id="stopButton">Stop</button>
+        <button id="fullscreenButton">Fullscreen</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const videoPlayer = document.getElementById('videoPlayer');
+        const videoInput = document.getElementById('videoInput');
+        const playButton = document.getElementById('playButton');
+        const pauseButton = document.getElementById('pauseButton');
+        const stopButton = document.getElementById('stopButton');
+        const fullscreenButton = document.getElementById('fullscreenButton');
+
+        // Load video file from input
+        videoInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const videoURL = URL.createObjectURL(file);
+                videoPlayer.src = videoURL;
+                videoPlayer.load(); // Load the new video
+                videoPlayer.play(); // Optional: Play automatically after loading
+            } else {
+                alert('Please select a video file.');
+            }
+        });
+
+        // Play video
+        playButton.addEventListener('click', () => {
+            videoPlayer.play();
+        });
+
+        // Pause video
+        pauseButton.addEventListener('click', () => {
+            videoPlayer.pause();
+        });
+
+        // Stop video
+        stopButton.addEventListener('click', () => {
+            videoPlayer.pause();
+            videoPlayer.currentTime = 0; // Reset to the beginning
+        });
+
+        // Fullscreen toggle
+        fullscreenButton.addEventListener('click', () => {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.mozRequestFullScreen) { // Firefox
+                videoPlayer.mozRequestFullScreen();
+            } else if (videoPlayer.webkitRequestFullscreen) { // Chrome, Safari and Opera
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) { // IE/Edge
+                videoPlayer.msRequestFullscreen();
+            }
+        });
+    </script>
 </body>
 </html>
