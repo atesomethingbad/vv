@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Video Editor</title>
+    <title>Custom Video Player</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,17 +11,20 @@
             flex-direction: column;
             align-items: center;
             background-color: #f0f0f0;
-            margin: 0;
             padding: 20px;
         }
-        h1 {
-            margin-bottom: 20px;
+        video {
+            max-width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
         }
-        input {
-            margin: 10px 0;
+        .controls {
+            display: flex;
+            align-items: center;
         }
         button {
-            padding: 10px 20px;
+            padding: 5px 10px;
+            margin: 0 5px;
             background-color: #007BFF;
             color: white;
             border: none;
@@ -30,20 +33,18 @@
         button:hover {
             background-color: #0056b3;
         }
-        video {
-            margin-top: 20px;
-            max-width: 100%;
-        }
     </style>
 </head>
 <body>
-    <h1>Simple Video Editor</h1>
-    <input type="file" id="videoInput" accept="video/*" />
-    <input type="file" id="imageInput" accept="image/*" />
-    <button id="exportButton">Export Video</button>
-    <video id="videoPlayer" controls></video>
-    
-    <script src="https://cdn.rawgit.com/Kagami/ffmpeg.js/master/ffmpeg.js"></script>
+    <h1>Custom Video Player</h1>
+    <video id="videoPlayer" src="" type="video/mp4"></video>
+    <div class="controls">
+        <input type="file" id="videoInput" accept="video/*" />
+        <button id="playButton">Play</button>
+        <button id="pauseButton">Pause</button>
+        <button id="stopButton">Stop</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
